@@ -1,0 +1,9 @@
+*~
+
+__pycache__
+.pytest_cache
+
+htmlcov/*
+.coverage
+pytest-coverage.txt
+pytest.xml

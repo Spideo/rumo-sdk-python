@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "template"
+version = "0.1.0"
+description = "Generic template for Python libraries at Spideo"
+authors = ["Spideo Developers <developers@spideo.tv>"]
+readme = "README.md"
+packages = [{include = "template", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+pandas = "~1.5.3"
+numpy = "~1.24.2"
+
+[tool.poetry.group.lint.dependencies]
+isort = "^5.12.0"
+black = "^23.1.0"
+flake8 = "^6.0.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
