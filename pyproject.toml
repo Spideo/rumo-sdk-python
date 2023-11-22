@@ -1,15 +1,13 @@
 [tool.poetry]
-name = "template"
+name = "rumo-sdk"
 version = "0.1.0"
-description = "Generic template for Python libraries at Spideo"
+description = "Python SDK for Rumo API"
 authors = ["Spideo Developers <developers@spideo.tv>"]
 readme = "README.md"
-packages = [{include = "template", from = "src"}]
+packages = [{include = "rumo_sdk", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
-pandas = "~1.5.3"
-numpy = "~1.24.2"
 
 [tool.poetry.group.lint.dependencies]
 isort = "^5.12.0"
