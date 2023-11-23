@@ -34,24 +34,23 @@ class InteractionsApi:
         return self._api_client.post(endpoint)
 
     def delete_interaction(
-        self, user_id: str, interaction_type: str, content_id: str
+        self, user_id: str, interaction_type: InteractionType, content_id: str
     ) -> dict:
-        endpoint = (
-            f"/user/{user_id}/interactions/{interaction_type}/content/{content_id}"
-        )
+        _type = interaction_type.value
+        endpoint = f"/users/{user_id}/interactions/{_type}/content/{content_id}"
         return self._api_client.delete(endpoint)
 
     def get_interactions(
         self,
         user_id: str,
-        interaction_type: Optional[str] = None,
+        interaction_type: Optional[InteractionType] = None,
         content_id: Optional[str] = None,
         skip: Optional[int] = 0,
         limit: Optional[int] = 10,
     ) -> dict:
         endpoint = f"/users/{user_id}/interactions"
         params = {
-            "type": interaction_type,
+            "type": interaction_type.value if interaction_type is not None else None,
             "contentId": content_id,
             "skip": skip,
             "limit": limit,
