@@ -7,3 +7,5 @@ htmlcov/*
 .coverage
 pytest-coverage.txt
 pytest.xml
+
+.ipynb_checkpoints/*
