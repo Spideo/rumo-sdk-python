@@ -16,6 +16,8 @@ class InteractionType(Enum):
 
 
 class InteractionsApi:
+    """https://apidoc.rumo.co/#post-/users/-userId-/interactions/-interactionType-/content/-contentId-"""  # noqa
+
     def __init__(self, api_client):
         self._api_client = api_client
 

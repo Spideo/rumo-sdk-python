@@ -2,6 +2,8 @@ from typing import Optional
 
 
 class SearchApi:
+    """https://apidoc.rumo.co/#post-/search/advanced"""
+
     def __init__(self, api_client):
         self._api_client = api_client
 
