@@ -120,7 +120,7 @@ def test_dislike(interactions_mock):
 
 
 def test_more_info(interactions_mock):
-    interactions_mock.more_info("uid", "cid")
+    interactions_mock.moreInfo("uid", "cid")
     interactions_mock._post_interaction.assert_called_once_with(
         "uid", InteractionType.MOREINFO, "cid"
     )
@@ -141,7 +141,7 @@ def test_complete(interactions_mock):
 
 
 def test_add_to_list(interactions_mock):
-    interactions_mock.add_to_list("uid", "cid")
+    interactions_mock.addToList("uid", "cid")
     interactions_mock._post_interaction.assert_called_once_with(
         "uid", InteractionType.ADDTOLIST, "cid"
     )
