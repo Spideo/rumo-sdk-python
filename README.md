@@ -36,7 +36,7 @@ List of features to be implemented before we can release this SDK
 - [x] Basic catalog endpoints (get, count and delete content)
 - [x] Create user interactions (also get and delete)
 - [x] Advanced search endpoints
-- [ ] Recommendation endpoints (C2C and U2C, including USF)
+- [x] Recommendation endpoints (C2C and U2C, including USF)
 - [ ] Simple POST/content from `list` of `dict` (or `JSON` file)
 - [ ] Advanced POST/content (splitting large `list` or file by batches)
 - [ ] Detailed validation of all contents
