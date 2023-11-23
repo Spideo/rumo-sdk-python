@@ -15,12 +15,15 @@ class RumoClient:
         return self._source_id
 
     @property
-    def base_headers(self):
+    def _base_headers(self):
         return {"x-api-key": self._api_key}
 
     @property
-    def base_url(self):
+    def _base_url(self):
         return f"{self._api_url}/{self._source_id}"
+
+    def _generate_url(self, endpoint):
+        return "".join([self._base_url, "/", endpoint.lstrip("/")])
 
     def call_api(
         self,
@@ -31,8 +34,8 @@ class RumoClient:
         json: Optional[dict] = None,
         debug: Optional[bool] = False,
     ):
-        url = "".join([self.base_url, "/", endpoint.lstrip("/")])
-        headers = deepcopy(self.base_headers)
+        url = self._generate_url(endpoint)
+        headers = deepcopy(self._base_headers)
         if header_params is not None:
             headers.update(header_params)
         req = request(method, url, params=query_params, headers=headers, json=json)
