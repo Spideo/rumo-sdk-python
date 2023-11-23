@@ -8,6 +8,7 @@ packages = [{include = "rumo_sdk", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
+requests = "^2.31.0"
 
 [tool.poetry.group.lint.dependencies]
 isort = "^5.12.0"
