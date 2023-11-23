@@ -26,8 +26,8 @@ class InteractionsApi:
     ) -> dict:
         endpoint = "".join(
             [
-                f"/users/{user_id}/",
-                f"interactions/{interaction_type.value}",
+                f"/users/{user_id}",
+                f"/interactions/{interaction_type.value}",
                 f"/content/{content_id}",
             ]
         )
