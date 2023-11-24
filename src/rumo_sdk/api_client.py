@@ -1,4 +1,5 @@
 from copy import deepcopy
+from json import JSONDecodeError
 from typing import Optional
 
 from requests import request
@@ -46,7 +47,11 @@ class RumoClient:
             if hasattr(req.request, "body"):
                 print(f"body: {req.request.body}")
         req.raise_for_status()
-        return req.json()
+        try:
+            res = req.json()
+        except JSONDecodeError:
+            res = req.status_code
+        return res
 
     def get(self, endpoint: str, **kwargs):
         return self.call_api("GET", endpoint, **kwargs)
@@ -56,3 +61,6 @@ class RumoClient:
 
     def post(self, endpoint: str, **kwargs):
         return self.call_api("POST", endpoint, **kwargs)
+
+    def put(self, endpoint: str, **kwargs):
+        return self.call_api("PUT", endpoint, **kwargs)
