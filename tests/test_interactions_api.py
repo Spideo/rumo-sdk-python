@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from rumo_sdk.api_client import RumoClient
-from rumo_sdk.interactions_api import InteractionsApi, InteractionType
+from rumo_sdk.interactions_api import InteractionsApi, InteractionType, TargetType
 
 
 @pytest.fixture
@@ -37,12 +37,32 @@ def test_delete_interaction(api_mock):
     )
 
 
+def test_post_interaction_on_keyword(api_mock):
+    interactions_api = InteractionsApi(api_mock)
+    interactions_api.post_interaction_on_keyword(
+        "uid", InteractionType.CLICK, "catégorie", "mot"
+    )
+    api_mock.call_api.assert_called_once_with(
+        "POST", "/users/uid/interactions/click/category/catégorie/keyword/mot"
+    )
+
+
+def test_delete_interaction_on_keyword(api_mock):
+    interactions_api = InteractionsApi(api_mock)
+    interactions_api.delete_interaction_on_keyword(
+        "uid", InteractionType.CLICK, "catégorie", "mot"
+    )
+    api_mock.call_api.assert_called_once_with(
+        "DELETE", "/users/uid/interactions/click/category/catégorie/keyword/mot"
+    )
+
+
 @pytest.mark.parametrize(
     "kwargs",
     [
         ({}),
         ({"skip": 2, "limit": 3}),
-        ({"content_id": "cid"}),
+        ({"content_id": "cid", "target_type": TargetType.CONTENT}),
         ({"interaction_type": InteractionType.START}),
         ({"content_id": "cid", "interaction_type": InteractionType.DISLIKE}),
         (
@@ -51,6 +71,7 @@ def test_delete_interaction(api_mock):
                 "limit": 3,
                 "content_id": "cid",
                 "interaction_type": InteractionType.LIKE,
+                "target_type": TargetType.KEYWORD,
             }
         ),
     ],
@@ -58,12 +79,14 @@ def test_delete_interaction(api_mock):
 def test_get_interactions(api_mock, kwargs):
     interactions_api = InteractionsApi(api_mock)
     interactions_api.get_interactions("uid", **kwargs)
-    qtype = kwargs["interaction_type"].value if "interaction_type" in kwargs else None
+    itype = kwargs["interaction_type"].value if "interaction_type" in kwargs else None
+    ttype = kwargs["target_type"].value if "target_type" in kwargs else None
     query_params = {
         "skip": kwargs.get("skip", 0),
         "limit": kwargs.get("limit", 10),
         "contentId": kwargs.get("content_id", None),
-        "type": qtype,
+        "targetType": ttype,
+        "type": itype,
     }
     api_mock.call_api.assert_called_once_with(
         "GET", "/users/uid/interactions", query_params=query_params

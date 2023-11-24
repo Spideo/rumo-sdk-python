@@ -35,13 +35,13 @@ List of features to be implemented before we can release this SDK
 - [x] Configurable API client
 - [x] Basic catalog endpoints (get, count and delete content)
 - [x] Create user interactions on content items (also get and delete)
-- [ ] User interactions on keywords
+- [x] User interactions on keywords
 - [x] Advanced search endpoints
 - [x] Recommendation endpoints (C2C and U2C, including USF)
 - [ ] Simple POST/content from `list` of `dict` (or `JSON` file)
 - [ ] Advanced POST/content (splitting large `list` or file by batches)
 - [ ] Detailed validation of all contents
-- [ ] "GDPR" endpoints
+- [x] "GDPR" endpoints
 - [ ] (optional?) Implement filters everywhere
 - [ ] Documentation (relevant level TBD)
 - [ ] Improve error handling (also TBD)
