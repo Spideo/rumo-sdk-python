@@ -14,7 +14,7 @@ class RecommendationApi:
     def get_similar(self, content_id: str, algo: Optional[RecoAlgo] = RecoAlgo.COSINE):
         """https://apidoc.rumo.co/#get-/content/-contentId-/similar"""
         endpoint = f"/content/{content_id}/similar"
-        params = {"algo": algo.value}
+        params = {"algo": algo.value if algo is not None else None}
         return self._api_client.get(endpoint, query_params=params)
 
     def explain_similar(self, base_content: str, reco_content: str):
@@ -27,7 +27,7 @@ class RecommendationApi:
     ):
         """https://apidoc.rumo.co/#get-/users/-userId-/recommendation"""
         endpoint = f"/users/{user_id}/recommendation"
-        params = {"algo": algo.value}
+        params = {"algo": algo.value if algo is not None else None}
         return self._api_client.get(endpoint, query_params=params)
 
     def get_user_profile(self, user_id: str):
