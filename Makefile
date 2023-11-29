@@ -17,6 +17,9 @@ lint-isort:
 lint-flake8:
 	$(CMD) flake8 .
 
+pytype:
+	$(CMD) pytype .
+
 format: format-black format-isort
 
 lint: lint-black lint-isort lint-flake8
