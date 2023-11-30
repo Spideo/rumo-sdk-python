@@ -25,8 +25,8 @@ class TargetType(Enum):
 class InteractionsApi:
     """https://apidoc.rumo.co/#post-/users/-userId-/interactions/-interactionType-/content/-contentId-"""  # noqa
 
-    def __init__(self, api_client: api_client.RumoClient):
-        self._api_client = api_client
+    def __init__(self, rumo_client: api_client.RumoClient):
+        self._rumo_client = rumo_client
 
     def _post_interaction(
         self, user_id: str, interaction_type: InteractionType, content_id: str
@@ -38,14 +38,14 @@ class InteractionsApi:
                 f"/content/{content_id}",
             ]
         )
-        return self._api_client.post(endpoint)
+        return self._rumo_client.post(endpoint)
 
     def delete_interaction(
         self, user_id: str, interaction_type: InteractionType, content_id: str
     ) -> dict:
         _type = interaction_type.value
         endpoint = f"/users/{user_id}/interactions/{_type}/content/{content_id}"
-        return self._api_client.delete(endpoint)
+        return self._rumo_client.delete(endpoint)
 
     def post_interaction_on_keyword(
         self,
@@ -63,7 +63,7 @@ class InteractionsApi:
                 f"/keyword/{keyword}",
             ]
         )
-        return self._api_client.post(endpoint)
+        return self._rumo_client.post(endpoint)
 
     def delete_interaction_on_keyword(
         self,
@@ -81,7 +81,7 @@ class InteractionsApi:
                 f"/keyword/{keyword}",
             ]
         )
-        return self._api_client.delete(endpoint)
+        return self._rumo_client.delete(endpoint)
 
     def get_interactions(
         self,
@@ -100,7 +100,7 @@ class InteractionsApi:
             "skip": skip,
             "limit": limit,
         }
-        return self._api_client.get(endpoint, query_params=params)
+        return self._rumo_client.get(endpoint, query_params=params)
 
     def click(self, user_id: str, content_id: str) -> dict:
         return self._post_interaction(user_id, InteractionType.CLICK, content_id)
