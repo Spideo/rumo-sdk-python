@@ -9,21 +9,17 @@ class RumoClient:
     def __init__(self, api_url: str, source_id: str, api_key: str):
         self._api_url = api_url.rstrip("/")
         self._api_key = api_key
-        self._source_id = source_id
+        self.source_id = source_id
 
     @property
-    def source_id(self):
-        return self._source_id
-
-    @property
-    def _base_headers(self):
+    def _base_headers(self) -> dict:
         return {"x-api-key": self._api_key}
 
     @property
-    def _base_url(self):
-        return f"{self._api_url}/{self._source_id}"
+    def _base_url(self) -> str:
+        return f"{self._api_url}/{self.source_id}"
 
-    def _generate_url(self, endpoint):
+    def _generate_url(self, endpoint: str) -> str:
         return "".join([self._base_url, "/", endpoint.lstrip("/")])
 
     def call_api(
@@ -34,7 +30,7 @@ class RumoClient:
         header_params: Optional[dict] = None,
         json: Optional[dict] = None,
         debug: Optional[bool] = False,
-    ):
+    ) -> dict:
         url = self._generate_url(endpoint)
         headers = deepcopy(self._base_headers)
         if header_params is not None:
@@ -50,17 +46,17 @@ class RumoClient:
         try:
             res = req.json()
         except JSONDecodeError:
-            res = req.status_code
+            res = {"status_code": req.status_code}
         return res
 
-    def get(self, endpoint: str, **kwargs):
+    def get(self, endpoint: str, **kwargs) -> dict:
         return self.call_api("GET", endpoint, **kwargs)
 
-    def delete(self, endpoint: str, **kwargs):
+    def delete(self, endpoint: str, **kwargs) -> dict:
         return self.call_api("DELETE", endpoint, **kwargs)
 
-    def post(self, endpoint: str, **kwargs):
+    def post(self, endpoint: str, **kwargs) -> dict:
         return self.call_api("POST", endpoint, **kwargs)
 
-    def put(self, endpoint: str, **kwargs):
+    def put(self, endpoint: str, **kwargs) -> dict:
         return self.call_api("PUT", endpoint, **kwargs)

@@ -1,10 +1,11 @@
 from typing import Optional
+from rumo_sdk import api_client
 
 
 class SearchApi:
     """https://apidoc.rumo.co/#post-/search/advanced"""
 
-    def __init__(self, api_client):
+    def __init__(self, api_client: api_client.RumoClient):
         self._api_client = api_client
 
     def _advanced_search(

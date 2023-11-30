@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import Optional
 
+from rumo_sdk import api_client
+
 
 class InteractionType(Enum):
     CLICK = "click"
@@ -23,7 +25,7 @@ class TargetType(Enum):
 class InteractionsApi:
     """https://apidoc.rumo.co/#post-/users/-userId-/interactions/-interactionType-/content/-contentId-"""  # noqa
 
-    def __init__(self, api_client):
+    def __init__(self, api_client: api_client.RumoClient):
         self._api_client = api_client
 
     def _post_interaction(
