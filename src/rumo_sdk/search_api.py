@@ -1,12 +1,13 @@
 from typing import Optional
+
 from rumo_sdk import api_client
 
 
 class SearchApi:
     """https://apidoc.rumo.co/#post-/search/advanced"""
 
-    def __init__(self, api_client: api_client.RumoClient):
-        self._api_client = api_client
+    def __init__(self, rumo_client: api_client.RumoClient):
+        self._rumo_client = rumo_client
 
     def _advanced_search(
         self,
@@ -18,7 +19,7 @@ class SearchApi:
         endpoint = "/search/advanced"
         params = {"skip": skip, "limit": limit, "details": str(details).lower()}
         headers = {"Content-Type": "application/json"}
-        return self._api_client.post(
+        return self._rumo_client.post(
             endpoint, header_params=headers, query_params=params, json=search_parameter
         )
 
