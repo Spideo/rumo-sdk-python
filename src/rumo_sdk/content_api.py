@@ -1,8 +1,10 @@
 from typing import Optional
 
+from rumo_sdk import api_client
+
 
 class ContentApi:
-    def __init__(self, api_client):
+    def __init__(self, api_client: api_client.RumoClient):
         self._api_client = api_client
 
     def get_items(self, skip: Optional[int] = 0, limit: Optional[int] = 10) -> dict:
@@ -16,7 +18,7 @@ class ContentApi:
         endpoint = f"/content/{content_id}"
         return self._api_client.get(endpoint)
 
-    def delete_item_by_id(self, content_id: str):
+    def delete_item_by_id(self, content_id: str) -> dict:
         """https://apidoc.rumo.co/#delete-/content/-contentId-"""
         endpoint = f"/content/{content_id}"
         return self._api_client.delete(endpoint)
