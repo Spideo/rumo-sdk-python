@@ -18,7 +18,7 @@ lint-flake8:
 	$(CMD) flake8 .
 
 pytype:
-	$(CMD) pytype .
+	$(CMD) pytype -j auto
 
 format: format-black format-isort
 
