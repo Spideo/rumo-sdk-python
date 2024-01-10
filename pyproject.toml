@@ -10,6 +10,7 @@ packages = [{include = "rumo_sdk", from = "src"}]
 python = "^3.8.1"
 requests = "^2.31.0"
 requests-mock = "^1.11.0"
+openapi-core = "0.19.0a1"
 
 [tool.poetry.group.lint.dependencies]
 isort = "^5.12.0"

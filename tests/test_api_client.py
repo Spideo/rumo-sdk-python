@@ -67,3 +67,10 @@ def test_call_api_headers(requests_mock):
     request = requests_mock.last_request
     assert request.url == "https://rumo.com/source/endpoint"
     assert expected_headers.items() <= request.headers.items()
+
+
+def test_call_api_dry_run(requests_mock):
+    requests_mock.get("https://rumo.com/source/endpoint", json={})
+    rumo_client = RumoClient("https://rumo.com", "source", "key")
+    assert rumo_client.call_api("GET", "endpoint", dry_run=True) == {"dry_run": True}
+    assert requests_mock.call_count == 0
