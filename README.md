@@ -38,9 +38,9 @@ List of features to be implemented before we can release this SDK
 - [x] User interactions on keywords
 - [x] Advanced search endpoints
 - [x] Recommendation endpoints (C2C and U2C, including USF)
-- [ ] Simple POST/content from `list` of `dict` (or `JSON` file)
-- [ ] Advanced POST/content (splitting large `list` or file by batches)
-- [ ] Detailed validation of all contents
+- [x] Simple POST/content from `list` of `dict` (or `JSON` file)
+- [x] Advanced POST/content (splitting large `list` or file by batches)
+- [x] Detailed validation of all contents
 - [x] "GDPR" endpoints
 - [ ] (optional?) Implement filters everywhere
 - [ ] Documentation (relevant level TBD)

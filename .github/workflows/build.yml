@@ -43,7 +43,7 @@ jobs:
           python -V
           poetry run python -V
       - name: install requirements
-        run: poetry install --only typecheck
+        run: poetry install
       - name: run static type checking
         run: make pytype
 

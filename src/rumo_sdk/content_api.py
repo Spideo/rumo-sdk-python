@@ -1,6 +1,10 @@
+import json
 from typing import Optional
 
+from openapi_core.validation.request.exceptions import InvalidRequestBody
+
 from rumo_sdk import api_client
+from rumo_sdk.utils import batched
 
 
 class ContentApi:
@@ -28,3 +32,53 @@ class ContentApi:
         endpoint = "/content-count"
         response = self._rumo_client.get(endpoint)
         return response["count"]
+
+    def post_content(self, content: dict) -> dict:
+        """https://apidoc.rumo.co/#post-/content"""
+        endpoint = "/content"
+        return self._rumo_client.post(endpoint, json=[content])
+
+    def post_catalog(self, catalog: list[dict]) -> dict:
+        """https://apidoc.rumo.co/#post-/content"""
+        endpoint = "/content"
+        return self._rumo_client.post(endpoint, json=catalog)
+
+    def validate_content(self, content: dict) -> bool:
+        endpoint = "/content"
+        try:
+            self._rumo_client.post(endpoint, json=[content], dry_run=True)
+        except InvalidRequestBody as e:
+            print(f"Invalid content with ID: {content.get('id')}")
+            print(f"Validation error: {e.__cause__}\n")
+            return False
+        else:
+            return True
+
+    def validate_catalog(self, catalog: list[dict]) -> bool:
+        validated = [self.validate_content(content) for content in catalog]
+        if all(validated):
+            print("All contents in catalog appear to be valid.")
+        else:
+            print("There are errors in the catalog.")
+            total_errors = len(validated) - sum(validated)
+            print(f"{total_errors} out of {len(catalog)} content items are in error.")
+        return all(validated)
+
+    def upload_from_file(
+        self,
+        filename: str,
+        batch_size: Optional[int] = 100,
+        validate: Optional[bool] = True,
+    ):
+        with open(filename, "r") as f:
+            catalog = json.load(f)
+        print(f"\nRead {len(catalog)} contents.")
+        if validate:
+            print("\nValidating catalog contents.")
+            if not self.validate_catalog(catalog):
+                return
+        print(f"\nRead {len(catalog)} contents, now validating content.")
+        for batch in batched(catalog, batch_size):
+            print(f"\nSending batch of {len(batch)} contents to Rumo API.")
+            self.post_catalog(catalog)
+        print("\nFinished uploading catalog.")

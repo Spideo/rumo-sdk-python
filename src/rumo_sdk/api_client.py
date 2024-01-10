@@ -2,14 +2,28 @@ from copy import deepcopy
 from json import JSONDecodeError
 from typing import Optional
 
-from requests import request
+from openapi_core.contrib.requests import (
+    RequestsOpenAPIRequest,
+    RequestsOpenAPIResponse,
+)
+from requests import Request, Session
+
+from rumo_sdk import open_api
 
 
 class RumoClient:
-    def __init__(self, api_url: str, source_id: str, api_key: str):
+    def __init__(
+        self,
+        api_url: str,
+        source_id: str,
+        api_key: str,
+        openapi_type: Optional[open_api.OpenApiType] = open_api.OpenApiType.NONE,
+        openapi_source: Optional[str] = None,
+    ):
         self._api_url = api_url.rstrip("/")
         self._api_key = api_key
         self.source_id = source_id
+        self.openapi = open_api.get_openapi(openapi_type, openapi_source)
 
     @property
     def _base_headers(self) -> dict:
@@ -30,23 +44,34 @@ class RumoClient:
         header_params: Optional[dict] = None,
         json: Optional[dict] = None,
         debug: Optional[bool] = False,
+        validate_request: Optional[bool] = True,
+        validate_response: Optional[bool] = False,
+        dry_run: Optional[bool] = False,
     ) -> dict:
         url = self._generate_url(endpoint)
         headers = deepcopy(self._base_headers)
         if header_params is not None:
             headers.update(header_params)
-        req = request(method, url, params=query_params, headers=headers, json=json)
+        req = Request(method, url, params=query_params, headers=headers, json=json)
         if debug:
-            print(f"url: {req.request.url}")
-            print(f"path: {req.request.path_url}")
-            print(f"headers: {req.request.headers}")
-            if hasattr(req.request, "body"):
-                print(f"body: {req.request.body}")
-        req.raise_for_status()
+            for attribute in ["url", "headers", "data", "files", "json"]:
+                print(f"{attribute}: {getattr(req, attribute, None)}")
+        if validate_request and self.openapi is not None:
+            openapi_request = RequestsOpenAPIRequest(req)
+            self.openapi.validate_request(openapi_request)
+        if dry_run:
+            return {"dry_run": True}
+        prepped = req.prepare()
+        session = Session()
+        response = session.send(prepped)
+        response.raise_for_status()
+        if validate_response and self.openapi is not None:
+            openapi_response = RequestsOpenAPIResponse(response)
+            self.openapi.validate_response(openapi_request, openapi_response)
         try:
-            res = req.json()
+            res = response.json()
         except JSONDecodeError:
-            res = {"status_code": req.status_code}
+            res = {"status_code": response.status_code}
         return res
 
     def get(self, endpoint: str, **kwargs) -> dict:
