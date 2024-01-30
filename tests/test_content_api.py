@@ -52,6 +52,12 @@ def test_delete_item_by_id(api_mock):
     api_mock.call_api.assert_called_once_with("DELETE", "/content/contentId")
 
 
+def test_delete_all(api_mock):
+    reco_api = ContentApi(api_mock)
+    reco_api._delete_all()
+    api_mock.call_api.assert_called_once_with("DELETE", "/content")
+
+
 def test_get_item_count(api_mock):
     reco_api = ContentApi(api_mock)
     reco_api.get_item_count()
