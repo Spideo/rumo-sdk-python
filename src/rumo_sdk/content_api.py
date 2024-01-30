@@ -27,6 +27,11 @@ class ContentApi:
         endpoint = f"/content/{content_id}"
         return self._rumo_client.delete(endpoint)
 
+    def _delete_all(self) -> dict:
+        """https://apidoc.rumo.co/#delete-/content"""
+        endpoint = "/content"
+        return self._rumo_client.delete(endpoint)
+
     def get_item_count(self) -> int:
         """https://apidoc.rumo.co/#get-/count-content"""
         endpoint = "/content-count"
