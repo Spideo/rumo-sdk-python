@@ -2,20 +2,11 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from rumo_sdk.api_client import RumoClient
 from rumo_sdk.interactions_api import InteractionsApi, InteractionType, TargetType
 
 
 @pytest.fixture
-def api_mock():
-    api_mock = RumoClient("url", "source", "key")
-    api_mock.call_api = MagicMock()
-    return api_mock
-
-
-@pytest.fixture
-def interactions_mock():
-    api_mock = RumoClient("url", "source", "key")
+def interactions_mock(api_mock):
     search_api = InteractionsApi(api_mock)
     search_api._post_interaction = MagicMock()
     return search_api

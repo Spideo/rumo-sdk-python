@@ -2,7 +2,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from rumo_sdk.api_client import RumoClient
 from rumo_sdk.sub_content_api import SubContentApi
 
 relations = [
@@ -12,13 +11,6 @@ relations = [
     {"contentId": "series_4", "subContentIds": ["episode"]},
     {"contentId": "series_5", "subContentIds": ["title_1", "title_2"]},
 ]
-
-
-@pytest.fixture
-def api_mock():
-    api_mock = RumoClient("url", "source", "key")
-    api_mock.call_api = MagicMock()
-    return api_mock
 
 
 @pytest.fixture

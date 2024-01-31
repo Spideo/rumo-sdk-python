@@ -4,7 +4,6 @@ from unittest.mock import MagicMock
 import pytest
 from openapi_core.validation.request.exceptions import InvalidRequestBody
 
-from rumo_sdk.api_client import RumoClient
 from rumo_sdk.content_api import ContentApi
 
 content_1 = {
@@ -20,13 +19,6 @@ content_2 = {
 
 
 @pytest.fixture
-def api_mock():
-    api_mock = RumoClient("url", "source", "key")
-    api_mock.call_api = MagicMock()
-    return api_mock
-
-
-@pytest.fixture
 def content_api_mock(api_mock):
     content_api_mock = ContentApi(api_mock)
     content_api_mock.validate_catalog = MagicMock(return_value=True)
@@ -35,8 +27,7 @@ def content_api_mock(api_mock):
 
 
 @pytest.fixture
-def api_mock_validation_error():
-    api_mock = RumoClient("url", "source", "key")
+def api_mock_validation_error(api_mock):
     api_mock.post = MagicMock(side_effect=InvalidRequestBody)
     return api_mock
 
