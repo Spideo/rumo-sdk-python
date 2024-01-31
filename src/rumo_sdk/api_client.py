@@ -6,7 +6,7 @@ from openapi_core.contrib.requests import (
     RequestsOpenAPIRequest,
     RequestsOpenAPIResponse,
 )
-from requests import Request, Session
+from requests import HTTPError, Request, Session
 
 from rumo_sdk import open_api
 
@@ -64,7 +64,15 @@ class RumoClient:
         prepped = req.prepare()
         session = Session()
         response = session.send(prepped)
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except HTTPError:
+            print(f"Response status code: {response.status_code}")
+            try:
+                print(f"Response message: {response.json()}")
+            except JSONDecodeError:
+                pass
+            raise
         if validate_response and self.openapi is not None:
             openapi_response = RequestsOpenAPIResponse(response)
             self.openapi.validate_response(openapi_request, openapi_response)
