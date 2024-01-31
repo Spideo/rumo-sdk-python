@@ -42,7 +42,7 @@ List of features to be implemented before we can release this SDK
 - [x] Advanced POST/content (splitting large `list` or file by batches)
 - [x] Detailed validation of all contents
 - [x] "GDPR" endpoints
-- [ ] (optional?) Implement filters everywhere
+- [x] (optional?) Implement filters everywhere
 - [ ] Documentation (relevant level TBD)
 - [ ] Improve error handling (also TBD)
 - [x] Write some unit tests (no need to be exhaustive)

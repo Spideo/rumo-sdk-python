@@ -39,6 +39,27 @@ def test_advanced_search_query_params(api_mock):
     )
 
 
+def test_advanced_search_with_filters(api_mock):
+    search_api = SearchApi(api_mock)
+    search_params = {"key1": "value1", "key2": "value2"}
+    filters = {"f_a": ["v_a", "v_b"], "f_b": ["v_c"]}
+    expected_query_params = {
+        "skip": 0,
+        "limit": 10,
+        "details": "false",
+        "filters": ["f_a:v_a,v_b", "f_b:v_c"],
+        "filterOperator": "OR",
+    }
+    search_api._advanced_search(search_params, filters=filters)
+    api_mock.call_api.assert_called_once_with(
+        "POST",
+        "/search/advanced",
+        header_params={"Content-Type": "application/json"},
+        query_params=expected_query_params,
+        json=search_params,
+    )
+
+
 def test_search_by_keyword_nokwargs(search_mock):
     search_mock.search_by_keyword("keyword")
     search_mock._advanced_search.assert_called_once_with(

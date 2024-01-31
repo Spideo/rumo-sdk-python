@@ -1,6 +1,7 @@
 from typing import Optional
 
 from rumo_sdk import api_client
+from rumo_sdk.utils import FilterOperatorType, RumoFilters
 
 
 class SearchApi:
@@ -15,9 +16,14 @@ class SearchApi:
         skip: Optional[int] = 0,
         limit: Optional[int] = 10,
         details: Optional[bool] = False,
+        filters: Optional[RumoFilters.FilterType] = None,
+        filter_operator: Optional[FilterOperatorType] = FilterOperatorType.OR,
     ) -> dict:
         endpoint = "/search/advanced"
         params = {"skip": skip, "limit": limit, "details": str(details).lower()}
+        if filters is not None:
+            rumo_filters = RumoFilters(filters, filter_operator)
+            params.update(rumo_filters.format_filters_to_query_params())
         headers = {"Content-Type": "application/json"}
         return self._rumo_client.post(
             endpoint, header_params=headers, query_params=params, json=search_parameter
