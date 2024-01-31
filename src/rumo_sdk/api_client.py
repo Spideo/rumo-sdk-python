@@ -54,7 +54,7 @@ class RumoClient:
             headers.update(header_params)
         req = Request(method, url, params=query_params, headers=headers, json=json)
         if debug:
-            for attribute in ["url", "headers", "data", "files", "json"]:
+            for attribute in ["url", "headers", "params", "data", "files", "json"]:
                 print(f"{attribute}: {getattr(req, attribute, None)}")
         if validate_request and self.openapi is not None:
             openapi_request = RequestsOpenAPIRequest(req)

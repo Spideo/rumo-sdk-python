@@ -17,6 +17,22 @@ def test_get_items_skip_limit(api_mock):
     )
 
 
+def test_get_items_filters(api_mock):
+    reco_api = ContentApi(api_mock)
+    filters = {"f_a": ["v_a", "v_b"], "f_b": ["v_c"]}
+    reco_api.get_items(filters=filters)
+    api_mock.call_api.assert_called_once_with(
+        "GET",
+        "/content",
+        query_params={
+            "skip": 0,
+            "limit": 10,
+            "filters": ["f_a:v_a,v_b", "f_b:v_c"],
+            "filterOperator": "OR",
+        },
+    )
+
+
 def test_get_item_by_id(api_mock):
     content_api = ContentApi(api_mock)
     content_api.get_item_by_id("contentId")

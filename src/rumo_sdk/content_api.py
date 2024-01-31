@@ -4,17 +4,26 @@ from typing import Optional
 from openapi_core.validation.request.exceptions import InvalidRequestBody
 
 from rumo_sdk import api_client
-from rumo_sdk.utils import batched
+from rumo_sdk.utils import FilterOperatorType, RumoFilters, batched
 
 
 class ContentApi:
     def __init__(self, rumo_client: api_client.RumoClient):
         self._rumo_client = rumo_client
 
-    def get_items(self, skip: Optional[int] = 0, limit: Optional[int] = 10) -> dict:
+    def get_items(
+        self,
+        skip: Optional[int] = 0,
+        limit: Optional[int] = 10,
+        filters: Optional[RumoFilters.FilterType] = None,
+        filter_operator: Optional[FilterOperatorType] = FilterOperatorType.OR,
+    ) -> dict:
         """https://apidoc.rumo.co/#get-/content"""
         endpoint = "/content"
         params = {"skip": skip, "limit": limit}
+        if filters is not None:
+            rumo_filters = RumoFilters(filters, filter_operator)
+            params.update(rumo_filters.format_filters_to_query_params())
         return self._rumo_client.get(endpoint, query_params=params)
 
     def get_item_by_id(self, content_id: str) -> dict:
