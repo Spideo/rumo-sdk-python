@@ -45,4 +45,4 @@ List of features to be implemented before we can release this SDK
 - [ ] (optional?) Implement filters everywhere
 - [ ] Documentation (relevant level TBD)
 - [ ] Improve error handling (also TBD)
-- [ ] Write some unit tests (no need to be exhaustive)
+- [x] Write some unit tests (no need to be exhaustive)
