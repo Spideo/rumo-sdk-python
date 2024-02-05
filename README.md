@@ -1,10 +1,32 @@
 # Python SDK for Rumo
 
-This is the first attempt at a public SDK for Rumo.
+## What is Rumo ?
 
-See official Rumo API documentation [here](https://apidoc.rumo.co/)
+[Rumo](https://www.rumo.co) is a flexible SaaS recommendation system adaptable to all entertainment industries (films, music, podcasts, video games, sports, etc.) and based on both content metadata and user behaviors. Rumo's algorithms are transparent and explainable, providing full control over the recommendation process.
 
-## Importing the repository
+To start working with Rumo, you will generally need to start by [creating an account](https://dashboard.rumo.co/auth/register) on the Rumo dashboard,
+in order to generate an environment and the associated credentials.
+
+
+## What is this reposotiry ?
+
+This is the first release of the Python SDK for Rumo.
+
+By installing this library (see below how) and running a few simples of Python code, you will be able to
+perform most of the basic operations on Rumo's APIs (=> see official Rumo API documentation [here](https://apidoc.rumo.co/)),
+and in particular:
+    * uploading your catalog to Rumo (and viewing, updating and deleting content items)
+    * using the recommendation and search features
+    * creating user interactions
+    * generating personalized recommendations
+
+Importantly, all of the API requests will automatically be validated against the Rumo documentation
+using the standard OpenAPI format,
+ensuring that all content items and API calls are well formatted.
+
+Additional options are also available for validating the API responses, and for additional "debug" logging of the API calls.
+
+## Working with this repository
 
 ### From github
 
@@ -24,25 +46,17 @@ This corresponds to an [editable install](https://pip.pypa.io/en/stable/topics/l
 useful when you are both using and developing the library at the same time.
 
 
-## Tutorial
+## Getting started
 
-See Python notebook file `tutorial.ipynb` for some examples, which you will of course need to adapt to your own catalog data.
+Most of the common examples of using the Rumo API are presented in the `post_content.ipynb` (for catalog upload)
+and `tutorial.ipynb` (for all other use cases) Python notebook, which should get you started making simple calls to the APIs.
 
-## TODO for release
+You will of course need to adapt these examples to your own Rumo environment (source + API key), catalog data and recommendation use cases.
 
-List of features to be implemented before we can release this SDK
+---------------------------------------
 
-- [x] Configurable API client
-- [x] Basic catalog endpoints (get, count and delete content)
-- [x] Create user interactions on content items (also get and delete)
-- [x] User interactions on keywords
-- [x] Advanced search endpoints
-- [x] Recommendation endpoints (C2C and U2C, including USF)
-- [x] Simple POST/content from `list` of `dict` (or `JSON` file)
-- [x] Advanced POST/content (splitting large `list` or file by batches)
-- [x] Detailed validation of all contents
-- [x] "GDPR" endpoints
-- [x] (optional?) Implement filters everywhere
-- [ ] Documentation (relevant level TBD)
-- [ ] Improve error handling (also TBD)
-- [x] Write some unit tests (no need to be exhaustive)
+## Contact us
+
+For any question directly related to this SDK, do not hesitate to create issues and Pull Requests.
+
+For any general question about Rumo, please feel free to write to contact@rumo.co.
