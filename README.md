@@ -48,8 +48,8 @@ useful when you are both using and developing the library at the same time.
 
 ## Getting started
 
-Most of the common examples of using the Rumo API are presented in the `post_content.ipynb` (for catalog upload)
-and `tutorial.ipynb` (for all other use cases) Python notebook, which should get you started making simple calls to the APIs.
+Most of the common examples of using the Rumo API are presented in the [`post_content.ipynb`](post_content.ipynb) (for catalog upload)
+and [`tutorial.ipynb`](tutorial.ipynb) (for all other use cases) Python notebook, which should get you started making simple calls to the APIs.
 
 You will of course need to adapt these examples to your own Rumo environment (source + API key), catalog data and recommendation use cases.
 
