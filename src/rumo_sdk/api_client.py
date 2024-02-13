@@ -17,7 +17,7 @@ class RumoClient:
         api_url: str,
         source_id: str,
         api_key: str,
-        openapi_type: Optional[open_api.OpenApiType] = open_api.OpenApiType.NONE,
+        openapi_type: Optional[open_api.OpenApiType] = open_api.OpenApiType.DEFAULT,
         openapi_source: Optional[str] = None,
     ):
         self._api_url = api_url.rstrip("/")

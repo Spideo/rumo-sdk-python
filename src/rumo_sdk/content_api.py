@@ -52,16 +52,18 @@ class ContentApi:
         endpoint = "/content"
         return self._rumo_client.post(endpoint, json=[content])
 
-    def _post_catalog(self, catalog: list[dict]) -> dict:
+    def _post_catalog(self, catalog: list[dict], **kwargs) -> dict:
         """send less than 500 contents to Rumo"""
         endpoint = "/content"
-        return self._rumo_client.post(endpoint, json=catalog)
+        return self._rumo_client.post(endpoint, json=catalog, **kwargs)
 
-    def post_catalog(self, catalog: list[dict], batch_size: Optional[int] = 100):
+    def post_catalog(
+        self, catalog: list[dict], batch_size: Optional[int] = 100, **kwargs
+    ):
         """https://apidoc.rumo.co/#post-/content"""
         for batch in batched(catalog, batch_size):
             print(f"\nSending batch of {len(batch)} contents to Rumo API.")
-            self._post_catalog(list(batch))
+            self._post_catalog(list(batch), **kwargs)
         print("\nFinished uploading catalog.")
 
     def validate_content(self, content: dict) -> bool:

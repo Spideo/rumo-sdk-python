@@ -1,6 +1,7 @@
 import pytest
 
 from rumo_sdk.api_client import RumoClient
+from rumo_sdk.open_api import OpenApiType
 
 
 @pytest.mark.parametrize(
@@ -11,7 +12,7 @@ from rumo_sdk.api_client import RumoClient
     ],
 )
 def test_base_url(url, source, expected):
-    rumo_client = RumoClient(url, source, "")
+    rumo_client = RumoClient(url, source, "", openapi_type=OpenApiType.NONE)
     assert rumo_client._base_url == expected
 
 
@@ -23,18 +24,20 @@ def test_base_url(url, source, expected):
     ],
 )
 def test_generate_url(endpoint, expected):
-    rumo_client = RumoClient("url", "source", "")
+    rumo_client = RumoClient("url", "source", "", openapi_type=OpenApiType.NONE)
     assert rumo_client._generate_url(endpoint) == expected
 
 
 def test_api_key_in_headers():
-    rumo_client = RumoClient("url", "source", "key")
+    rumo_client = RumoClient("url", "source", "key", openapi_type=OpenApiType.NONE)
     assert rumo_client._base_headers == {"x-api-key": "key"}
 
 
 def test_call_api(requests_mock):
     requests_mock.get("https://rumo.com/source/endpoint", json={})
-    rumo_client = RumoClient("https://rumo.com", "source", "key")
+    rumo_client = RumoClient(
+        "https://rumo.com", "source", "key", openapi_type=OpenApiType.NONE
+    )
     rumo_client.call_api("GET", "endpoint")
     assert requests_mock.call_count == 1
     request = requests_mock.last_request
@@ -46,7 +49,9 @@ def test_call_api(requests_mock):
 
 def test_call_api_query_params(requests_mock):
     requests_mock.get("https://rumo.com/source/endpoint", json={})
-    rumo_client = RumoClient("https://rumo.com", "source", "key")
+    rumo_client = RumoClient(
+        "https://rumo.com", "source", "key", openapi_type=OpenApiType.NONE
+    )
     query_params = {"key1": "value1", "key2": "value2"}
     rumo_client.call_api("GET", "endpoint", query_params=query_params)
     assert requests_mock.call_count == 1
@@ -59,7 +64,9 @@ def test_call_api_query_params(requests_mock):
 
 def test_call_api_headers(requests_mock):
     requests_mock.get("https://rumo.com/source/endpoint", json={})
-    rumo_client = RumoClient("https://rumo.com", "source", "key")
+    rumo_client = RumoClient(
+        "https://rumo.com", "source", "key", openapi_type=OpenApiType.NONE
+    )
     header_params = {"key1": "value1", "key2": "value2"}
     expected_headers = {"key1": "value1", "key2": "value2", "x-api-key": "key"}
     rumo_client.call_api("GET", "endpoint", header_params=header_params)
@@ -71,6 +78,8 @@ def test_call_api_headers(requests_mock):
 
 def test_call_api_dry_run(requests_mock):
     requests_mock.get("https://rumo.com/source/endpoint", json={})
-    rumo_client = RumoClient("https://rumo.com", "source", "key")
+    rumo_client = RumoClient(
+        "https://rumo.com", "source", "key", openapi_type=OpenApiType.NONE
+    )
     assert rumo_client.call_api("GET", "endpoint", dry_run=True) == {"dry_run": True}
     assert requests_mock.call_count == 0
