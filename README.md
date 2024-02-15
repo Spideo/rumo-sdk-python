@@ -1,5 +1,12 @@
 # Python SDK for Rumo
 
+![Build](https://github.com/spideo/rumo-sdk-python/actions/workflows/build.yml/badge.svg?branch=master)
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
+
+
 ## What is Rumo ?
 
 [Rumo](https://www.rumo.co) is a flexible SaaS recommendation system adaptable to all entertainment industries (films, music, podcasts, video games, sports, etc.) and based on both content metadata and user behaviors. Rumo's algorithms are transparent and explainable, providing full control over the recommendation process.
