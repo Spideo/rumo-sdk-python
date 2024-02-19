@@ -14,14 +14,17 @@
 To start working with Rumo, you will generally need to start by [creating an account](https://dashboard.rumo.co/auth/register) on the Rumo dashboard,
 in order to generate an environment and the associated credentials.
 
+More detailed information is available in the [official Rumo API documentation](https://apidoc.rumo.co/).
 
-## What is this reposotiry ?
+
+## What is this repository ?
 
 This is the first release of the Python SDK for Rumo.
 
 By installing this library (see below how) and running a few simples of Python code, you will be able to
 perform most of the basic operations on Rumo's APIs (=> see official Rumo API documentation [here](https://apidoc.rumo.co/)),
 and in particular:
+
     * uploading your catalog to Rumo (and viewing, updating and deleting content items)
     * using the recommendation and search features
     * creating user interactions
