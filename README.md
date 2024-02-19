@@ -1,6 +1,6 @@
 # Python SDK for Rumo
 
-![Build](https://github.com/spideo/rumo-sdk-python/actions/workflows/build.yml/badge.svg?branch=master)
+![Build](https://github.com/spideo/rumo-sdk-python/actions/workflows/build.yml/badge.svg?branch=main)
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
