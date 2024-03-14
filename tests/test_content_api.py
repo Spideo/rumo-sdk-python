@@ -33,6 +33,12 @@ def test_get_items_filters(api_mock):
     )
 
 
+def test_get_items_id(api_mock):
+    content_api = ContentApi(api_mock)
+    content_api.get_items_id()
+    api_mock.call_api.assert_called_once_with("GET", "/ids")
+
+
 def test_get_item_by_id(api_mock):
     content_api = ContentApi(api_mock)
     content_api.get_item_by_id("contentId")
