@@ -26,6 +26,11 @@ class ContentApi:
             params.update(rumo_filters.format_filters_to_query_params())
         return self._rumo_client.get(endpoint, query_params=params)
 
+    def get_items_id(self) -> dict:
+        """https://apidoc.rumo.co/#get-/ids"""
+        endpoint = "/ids"
+        return self._rumo_client.get(endpoint)
+
     def get_item_by_id(self, content_id: str) -> dict:
         """https://apidoc.rumo.co/#get-/content/-contentId-"""
         endpoint = f"/content/{content_id}"
