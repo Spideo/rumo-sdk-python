@@ -41,7 +41,7 @@ class ContentApi:
         endpoint = f"/content/{content_id}"
         return self._rumo_client.delete(endpoint)
 
-    def delete_items_by_id(self, contents_id, **kwargs) -> dict:
+    def delete_items_by_id(self, contents_id: list[str], **kwargs) -> dict:
         """https://apidoc.rumo.co/#delete-/content"""
         endpoint = "/content"
         params = {"id": contents_id}
