@@ -51,6 +51,15 @@ def test_delete_item_by_id(api_mock):
     api_mock.call_api.assert_called_once_with("DELETE", "/content/contentId")
 
 
+def test_delete_items_by_id(api_mock):
+    content_api = ContentApi(api_mock)
+    contents_id = ["1", "2", "3"]
+    content_api.delete_items_by_id(contents_id)
+    api_mock.call_api.assert_called_once_with(
+        "DELETE", "/content", query_params={"id": contents_id}
+    )
+
+
 def test_delete_all(api_mock):
     content_api = ContentApi(api_mock)
     content_api._delete_all()
