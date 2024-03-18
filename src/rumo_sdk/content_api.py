@@ -26,10 +26,10 @@ class ContentApi:
             params.update(rumo_filters.format_filters_to_query_params())
         return self._rumo_client.get(endpoint, query_params=params)
 
-    def get_items_id(self) -> dict:
+    def get_items_id(self, **kwargs) -> dict:
         """https://apidoc.rumo.co/#get-/ids"""
         endpoint = "/ids"
-        return self._rumo_client.get(endpoint)
+        return self._rumo_client.get(endpoint, **kwargs)
 
     def get_item_by_id(self, content_id: str) -> dict:
         """https://apidoc.rumo.co/#get-/content/-contentId-"""
@@ -40,6 +40,12 @@ class ContentApi:
         """https://apidoc.rumo.co/#delete-/content/-contentId-"""
         endpoint = f"/content/{content_id}"
         return self._rumo_client.delete(endpoint)
+
+    def delete_items_by_id(self, contents_id, **kwargs) -> dict:
+        """https://apidoc.rumo.co/#delete-/content"""
+        endpoint = "/content"
+        params = {"id": contents_id}
+        return self._rumo_client.delete(endpoint, query_params=params, **kwargs)
 
     def _delete_all(self) -> dict:
         """https://apidoc.rumo.co/#delete-/content"""
