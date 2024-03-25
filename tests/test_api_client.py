@@ -1,3 +1,5 @@
+import importlib
+
 import pytest
 
 from rumo_sdk.api_client import RumoClient
@@ -28,9 +30,13 @@ def test_generate_url(endpoint, expected):
     assert rumo_client._generate_url(endpoint) == expected
 
 
-def test_api_key_in_headers():
+def test_base_headers():
     rumo_client = RumoClient("url", "source", "key", openapi_type=OpenApiType.NONE)
-    assert rumo_client._base_headers == {"x-api-key": "key"}
+    version = importlib.metadata.version("rumo_sdk")
+    assert rumo_client._base_headers == {
+        "x-api-key": "key",
+        "User-Agent": f"rumo-sdk-python/{version}",
+    }
 
 
 def test_call_api(requests_mock):

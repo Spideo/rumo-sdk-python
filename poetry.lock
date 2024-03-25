@@ -340,6 +340,16 @@ files = [
 networkx = ">=2"
 
 [[package]]
+name = "importlib"
+version = "1.0.4"
+description = "Backport of importlib.import_module() from Python 2.7"
+optional = false
+python-versions = "*"
+files = [
+    {file = "importlib-1.0.4.zip", hash = "sha256:b6ee7066fea66e35f8d0acee24d98006de1a0a8a94a8ce6efe73a9a23c8d9826"},
+]
+
+[[package]]
 name = "importlib-resources"
 version = "6.1.1"
 description = "Read resources from Python packages"
@@ -1360,4 +1370,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "9ea3eb6ae368d07ebc5c4c5e8f05bce460ed68c6306b00b566e66628057efe56"
+content-hash = "83b61354e0d4c478a6219182d915215c5a9e530aa88c0188c9bf7540585a7b33"

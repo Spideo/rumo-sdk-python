@@ -8,7 +8,7 @@ from openapi_core.contrib.requests import (
 )
 from requests import HTTPError, Request, Session
 
-from rumo_sdk import open_api
+from rumo_sdk import __version__, open_api
 
 
 class RumoClient:
@@ -27,7 +27,10 @@ class RumoClient:
 
     @property
     def _base_headers(self) -> dict:
-        return {"x-api-key": self._api_key}
+        return {
+            "x-api-key": self._api_key,
+            "User-Agent": f"rumo-sdk-python/{__version__}",
+        }
 
     @property
     def _base_url(self) -> str:
