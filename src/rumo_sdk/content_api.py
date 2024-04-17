@@ -41,11 +41,20 @@ class ContentApi:
         endpoint = f"/content/{content_id}"
         return self._rumo_client.delete(endpoint)
 
-    def delete_items_by_id(self, contents_id: list[str], **kwargs) -> dict:
-        """https://apidoc.rumo.co/#delete-/content"""
+    def _delete_items_by_id(self, contents_id: list[str], **kwargs) -> dict:
+        """delete less than 10 contents"""
         endpoint = "/content"
         params = {"id": contents_id}
         return self._rumo_client.delete(endpoint, query_params=params, **kwargs)
+
+    def delete_items_by_id(
+        self, catalog: list[dict], batch_size: Optional[int] = 10, **kwargs
+    ):
+        """https://apidoc.rumo.co/#delete-/content"""
+        for batch in batched(catalog, batch_size):
+            print(f"\nDeleting batch of {len(batch)} contents")
+            self._delete_items_by_id(list(batch), **kwargs)
+        print("\nFinished deleting contents.")
 
     def _delete_all(self) -> dict:
         """https://apidoc.rumo.co/#delete-/content"""
