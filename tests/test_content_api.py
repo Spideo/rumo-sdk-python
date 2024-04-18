@@ -1,3 +1,5 @@
+from unittest.mock import call
+
 from rumo_sdk.content_api import ContentApi
 
 
@@ -58,6 +60,25 @@ def test_delete_items_by_id(api_mock):
     api_mock.call_api.assert_called_once_with(
         "DELETE", "/content", query_params={"id": contents_id}
     )
+
+
+def test_delete_items_by_id_by_batch(api_mock):
+    content_api = ContentApi(api_mock)
+    contents_id = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    content_api.delete_items_by_id(contents_id)
+    expectedCalls = [
+        call(
+            "DELETE",
+            "/content",
+            query_params={"id": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]},
+        ),
+        call(
+            "DELETE",
+            "/content",
+            query_params={"id": ["11"]},
+        ),
+    ]
+    api_mock.call_api.assert_has_calls(expectedCalls, any_order=False)
 
 
 def test_delete_all(api_mock):
