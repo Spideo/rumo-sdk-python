@@ -4,7 +4,7 @@ from urllib.request import urlopen
 
 from openapi_core import OpenAPI
 
-RUMO_API_URL = "https://apidoc.rumo.co/rumo_api.yaml"
+RUMO_API_URL = "https://api-doc.rumo.co/rumo.yaml"
 
 
 class OpenApiType(Enum):
