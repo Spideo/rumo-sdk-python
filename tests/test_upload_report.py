@@ -37,13 +37,21 @@ def test_build_report():
     expected_report = UploadReport(
         {"1", "2", "3", "4"}, {"1", "2", "3"}, expected_validation_errors
     )
-    report: UploadReport = UploadReport.build_report(catalog, responses)
+    report: UploadReport = UploadReport.build_report(catalog, responses_with_errors)
     assert report.processed_content == expected_report.processed_content
     assert report.invalid_content == expected_report.invalid_content
     assert report.validation_errors == expected_report.validation_errors
 
 
-responses = [
+def test_build_report_when_no_errors():
+    expected_report = UploadReport({"1", "2", "3", "4"}, set(), [])
+    report: UploadReport = UploadReport.build_report(catalog, responses_without_errors)
+    assert report.processed_content == expected_report.processed_content
+    assert report.invalid_content == expected_report.invalid_content
+    assert report.validation_errors == expected_report.validation_errors
+
+
+responses_with_errors = [
     {
         "message": (
             "Request processed successfully, some content items were invalid and not"
@@ -97,6 +105,17 @@ responses = [
                 "errorType": "BadRequest",
             },
         ],
+    },
+]
+
+responses_without_errors = [
+    {
+        "message": "Request processed successfully.",
+        "validationErrors": [],
+    },
+    {
+        "message": "Request processed successfully.",
+        "validationErrors": [],
     },
 ]
 
