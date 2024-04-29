@@ -46,7 +46,7 @@ class UploadReport:
         return cls(processed_content, invalid_content, validation_errors)
 
     @staticmethod
-    def get_processed_content_ids(catalog) -> list[str]:
+    def get_processed_content_ids(catalog) -> set[str]:
         processed_content_ids = set()
         for content in catalog:
             if "id" in content:
