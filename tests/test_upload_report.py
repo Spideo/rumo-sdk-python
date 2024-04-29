@@ -5,25 +5,31 @@ def test_build_report():
     expected_validation_errors = [
         ValidationError(
             "ERROR_0204",
-            "Invalid JSON content: [1] Availability's 'start' value must be lower than 'end' value.",
+            "Invalid JSON content: [1] Availability's 'start' value must be lower than"
+            " 'end' value.",
             "1,1",
             "BadRequest",
         ),
         ValidationError(
             "ERROR_0204",
-            "Invalid JSON content: [2] [ videogame] Keywords must not contain the characters '$' or '.', must not be longer than 128 characters and must not start or end with a whitespace",
+            "Invalid JSON content: [2] [ videogame] Keywords must not contain the"
+            " characters '$' or '.', must not be longer than 128 characters and must"
+            " not start or end with a whitespace",
             " videogame",
             "BadRequest",
         ),
         ValidationError(
             "ERROR_0204",
-            "Invalid JSON content: [3] [ videogame] Keywords must not contain the characters '$' or '.', must not be longer than 128 characters and must not start or end with a whitespace",
+            "Invalid JSON content: [3] [ videogame] Keywords must not contain the"
+            " characters '$' or '.', must not be longer than 128 characters and must"
+            " not start or end with a whitespace",
             " videogame",
             "BadRequest",
         ),
         ValidationError(
             "ERROR_0204",
-            "Invalid JSON content: [3] Availability's 'start' value must be lower than 'end' value.",
+            "Invalid JSON content: [3] Availability's 'start' value must be lower than"
+            " 'end' value.",
             "1,1",
             "BadRequest",
         ),
@@ -39,34 +45,54 @@ def test_build_report():
 
 responses = [
     {
-        "message": "Request processed successfully, some content items were invalid and not processed",
+        "message": (
+            "Request processed successfully, some content items were invalid and not"
+            " processed"
+        ),
         "validationErrors": [
             {
                 "errorCode": "ERROR_0204",
-                "message": "Invalid JSON content: [1] Availability's 'start' value must be lower than 'end' value.",
+                "message": (
+                    "Invalid JSON content: [1] Availability's 'start' value must be"
+                    " lower than 'end' value."
+                ),
                 "value": "1,1",
                 "errorType": "BadRequest",
             },
             {
                 "errorCode": "ERROR_0204",
-                "message": "Invalid JSON content: [2] [ videogame] Keywords must not contain the characters '$' or '.', must not be longer than 128 characters and must not start or end with a whitespace",
+                "message": (
+                    "Invalid JSON content: [2] [ videogame] Keywords must not contain"
+                    " the characters '$' or '.', must not be longer than 128 characters"
+                    " and must not start or end with a whitespace"
+                ),
                 "value": " videogame",
                 "errorType": "BadRequest",
             },
         ],
     },
     {
-        "message": "Request processed successfully, some content items were invalid and not processed",
+        "message": (
+            "Request processed successfully, some content items were invalid and not"
+            " processed"
+        ),
         "validationErrors": [
             {
                 "errorCode": "ERROR_0204",
-                "message": "Invalid JSON content: [3] [ videogame] Keywords must not contain the characters '$' or '.', must not be longer than 128 characters and must not start or end with a whitespace",
+                "message": (
+                    "Invalid JSON content: [3] [ videogame] Keywords must not contain"
+                    " the characters '$' or '.', must not be longer than 128 characters"
+                    " and must not start or end with a whitespace"
+                ),
                 "value": " videogame",
                 "errorType": "BadRequest",
             },
             {
                 "errorCode": "ERROR_0204",
-                "message": "Invalid JSON content: [3] Availability's 'start' value must be lower than 'end' value.",
+                "message": (
+                    "Invalid JSON content: [3] Availability's 'start' value must be"
+                    " lower than 'end' value."
+                ),
                 "value": "1,1",
                 "errorType": "BadRequest",
             },
