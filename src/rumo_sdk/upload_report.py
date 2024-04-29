@@ -39,29 +39,35 @@ class UploadReport:
         self.validation_errors = validation_errors
 
     @classmethod
-    def build_report(cls, catalog, upload_responses):
+    def build_report(
+        cls, catalog: list[dict], upload_responses: list[dict]
+    ) -> "UploadReport":
         processed_content = cls.get_processed_content_ids(catalog)
         validation_errors = cls.get_validation_errors(upload_responses)
         invalid_content = cls.get_invalid_content(validation_errors)
         return cls(processed_content, invalid_content, validation_errors)
 
     @staticmethod
-    def get_processed_content_ids(catalog) -> set[str]:
-        processed_content_ids = set()
+    def get_processed_content_ids(catalog: list[dict]) -> set[str]:
+        processed_content_ids: set[str] = set()
         for content in catalog:
             if "id" in content:
                 processed_content_ids.add(content["id"])
         return processed_content_ids
 
     @classmethod
-    def get_validation_errors(cls, upload_responses) -> list[ValidationError]:
-        validation_errors = []
+    def get_validation_errors(
+        cls, upload_responses: list[dict]
+    ) -> list[ValidationError]:
+        validation_errors: list[ValidationError] = []
         for response in upload_responses:
-            cls.build_validation_errors(response, validation_errors)
+            errors = cls.build_validation_errors(response)
+            validation_errors.extend(errors)
         return validation_errors
 
     @staticmethod
-    def build_validation_errors(response, validation_errors):
+    def build_validation_errors(response: dict) -> list[ValidationError]:
+        validation_errors: list[ValidationError] = []
         if response["validationErrors"] and len(response["validationErrors"]) != 0:
             for error in response["validationErrors"]:
                 errorCode = error["errorCode"]
@@ -71,12 +77,13 @@ class UploadReport:
                 validation_errors.append(
                     ValidationError(errorCode, message, value, errorType)
                 )
+        return validation_errors
 
     @staticmethod
     def get_invalid_content(validation_errors: list[ValidationError]) -> set[str]:
-        invalid_content = set()
+        invalid_content: set[str] = set()
         for error in validation_errors:
             content_id = error.parse_id_from_error_message()
-            if content_id:
+            if content_id is not None:
                 invalid_content.add(content_id)
         return invalid_content
