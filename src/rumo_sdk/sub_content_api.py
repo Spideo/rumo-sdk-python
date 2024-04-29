@@ -1,6 +1,7 @@
 from typing import Optional, TypedDict
 
 from rumo_sdk.content_api import ContentApi
+from rumo_sdk.upload_report import UploadReport
 from rumo_sdk.utils import batched
 
 
@@ -24,13 +25,17 @@ class SubContentApi(ContentApi):
         self,
         list_of_relations: list[SubContents],
         batch_size: Optional[int] = 100,
+        report: Optional[bool] = False,
         **kwargs,
     ):
         """https://apidoc.rumo.co/#post-/content/sub-contents"""
+        responses = []
         for batch in batched(list_of_relations, batch_size):
             print(f"\nSending batch of {len(batch)} sub-content relations to Rumo API.")
-            self._add_sub_contents(batch, **kwargs)
+            responses.append(self._add_sub_contents(batch, **kwargs))
         print("\nFinished uploading sub-contents.")
+        if report:
+            return UploadReport.build_report(list_of_relations, responses)
 
     def delete_sub_contents(self, content_id: str) -> dict:
         """https://apidoc.rumo.co/#get-/content/-contentId-/sub-contents"""
