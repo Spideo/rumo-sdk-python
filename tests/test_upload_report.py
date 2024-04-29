@@ -51,6 +51,61 @@ def test_build_report_when_no_errors():
     assert report.validation_errors == expected_report.validation_errors
 
 
+def test_build_report_when_subcontents_error():
+    expected_validation_errors = [
+        ValidationError(
+            "ERROR_0204",
+            "Content not Found: contentId does not exist.",
+            "1",
+            "RequestBodyValidation",
+        ),
+        ValidationError(
+            "ERROR_0204",
+            "Content not Found: contentId does not exist.",
+            "2",
+            "RequestBodyValidation",
+        ),
+    ]
+    expected_report = UploadReport(set(), set(), expected_validation_errors)
+    report: UploadReport = UploadReport.build_report(
+        sub_contents, sub_content_responses
+    )
+    assert report.processed_content == expected_report.processed_content
+    assert report.invalid_content == expected_report.invalid_content
+    assert report.validation_errors == expected_report.validation_errors
+
+
+sub_content_responses = [
+    {
+        "message": (
+            "Request processed successfully, some content items were invalid and not"
+            " processed"
+        ),
+        "validationErrors": [
+            {
+                "errorCode": "ERROR_0204",
+                "message": "Content not Found: contentId does not exist.",
+                "value": "1",
+                "errorType": "RequestBodyValidation",
+            },
+        ],
+    },
+    {
+        "message": (
+            "Request processed successfully, some content items were invalid and not"
+            " processed"
+        ),
+        "validationErrors": [
+            {
+                "errorCode": "ERROR_0204",
+                "message": "Content not Found: contentId does not exist.",
+                "value": "2",
+                "errorType": "RequestBodyValidation",
+            }
+        ],
+    },
+]
+
 responses_with_errors = [
     {
         "message": (
@@ -124,4 +179,9 @@ catalog = [
     {"id": "2", "label": "label_2"},
     {"id": "3", "label": "label_3"},
     {"id": "4", "label": "label_4"},
+]
+
+sub_contents = [
+    {"contentId": "1", "subContentIds": ["4", "5"]},
+    {"contentId": "2", "subContentIds": ["6", "7"]},
 ]
