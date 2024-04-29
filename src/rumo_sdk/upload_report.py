@@ -34,9 +34,7 @@ class UploadReport:
                 processed_content_ids.append(content["id"])
         return processed_content_ids
 
-    def get_validation_errors(
-        cls, upload_responses
-    ) -> tuple[list[str], list[ValidationError]]:
+    def get_validation_errors(cls, upload_responses) -> list[ValidationError]:
         validation_errors = []
         for response in upload_responses:
             cls.build_validation_errors(response, validation_errors)
