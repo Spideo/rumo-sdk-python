@@ -9,6 +9,16 @@ class ValidationError:
         self.value = value
         self.errorType = errorType
 
+    def __eq__(self, other):
+        if isinstance(other, ValidationError):
+            return (
+                self.errorCode == other.errorCode
+                and self.message == other.message
+                and self.value == other.value
+                and self.errorType == other.errorType
+            )
+        return False
+
     def parse_id_from_error_message(self) -> Optional[str]:
         matches = re.findall(r"\[(\d+)\]", self.message)
         if matches:
@@ -20,8 +30,8 @@ class ValidationError:
 class UploadReport:
     def __init__(
         self,
-        processed_content: list[str],
-        invalid_content: list[str],
+        processed_content: set[str],
+        invalid_content: set[str],
         validation_errors: list[ValidationError],
     ):
         self.processed_content = processed_content
@@ -33,14 +43,14 @@ class UploadReport:
         processed_content = cls.get_processed_content_ids(catalog)
         validation_errors = cls.get_validation_errors(upload_responses)
         invalid_content = cls.get_invalid_content(validation_errors)
-        return cls.__init__(cls, processed_content, invalid_content, validation_errors)
+        return cls(processed_content, invalid_content, validation_errors)
 
     @staticmethod
     def get_processed_content_ids(catalog) -> list[str]:
-        processed_content_ids = []
+        processed_content_ids = set()
         for content in catalog:
             if "id" in content:
-                processed_content_ids.append(content["id"])
+                processed_content_ids.add(content["id"])
         return processed_content_ids
 
     @classmethod
@@ -63,10 +73,10 @@ class UploadReport:
                 )
 
     @staticmethod
-    def get_invalid_content(validation_errors: list[ValidationError]) -> list[str]:
-        invalid_content = []
+    def get_invalid_content(validation_errors: list[ValidationError]) -> set[str]:
+        invalid_content = set()
         for error in validation_errors:
             content_id = error.parse_id_from_error_message()
             if content_id:
-                invalid_content.append(content_id)
+                invalid_content.add(content_id)
         return invalid_content
