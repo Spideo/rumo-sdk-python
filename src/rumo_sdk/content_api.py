@@ -4,6 +4,7 @@ from typing import Optional
 from openapi_core.validation.request.exceptions import InvalidRequestBody
 
 from rumo_sdk import api_client
+from rumo_sdk.upload_report import UploadReport
 from rumo_sdk.utils import FilterOperatorType, RumoFilters, batched
 
 
@@ -78,13 +79,20 @@ class ContentApi:
         return self._rumo_client.post(endpoint, json=catalog, **kwargs)
 
     def post_catalog(
-        self, catalog: list[dict], batch_size: Optional[int] = 100, **kwargs
-    ):
+        self,
+        catalog: list[dict],
+        batch_size: Optional[int] = 100,
+        report: Optional[bool] = False,
+        **kwargs,
+    ) -> Optional[UploadReport]:
         """https://apidoc.rumo.co/#post-/content"""
+        responses = []
         for batch in batched(catalog, batch_size):
             print(f"\nSending batch of {len(batch)} contents to Rumo API.")
-            self._post_catalog(list(batch), **kwargs)
+            responses.append(self._post_catalog(list(batch), **kwargs))
         print("\nFinished uploading catalog.")
+        if report:
+            return UploadReport.build_report(catalog, responses)
 
     def validate_content(self, content: dict) -> bool:
         endpoint = "/content"
