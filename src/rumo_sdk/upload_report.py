@@ -14,7 +14,7 @@ class ValidationError:
             "errorCode": self.errorCode,
             "message": self.message,
             "value": self.value,
-            "errorType": self.errorType
+            "errorType": self.errorType,
         }
 
     def __eq__(self, other):
@@ -49,7 +49,7 @@ class UploadReport:
     def to_dict(self):
         return {
             "invalid_content": list(self.invalid_content),
-            "validation_errors": [error.to_dict() for error in self.validation_errors]
+            "validation_errors": [error.to_dict() for error in self.validation_errors],
         }
 
     @classmethod
