@@ -9,6 +9,14 @@ class ValidationError:
         self.value = value
         self.errorType = errorType
 
+    def to_dict(self):
+        return {
+            "errorCode": self.errorCode,
+            "message": self.message,
+            "value": self.value,
+            "errorType": self.errorType
+        }
+
     def __eq__(self, other):
         if isinstance(other, ValidationError):
             return (
@@ -20,7 +28,7 @@ class ValidationError:
         return False
 
     def parse_id_from_error_message(self) -> Optional[str]:
-        matches = re.findall(r"\[(\d+)\]", self.message)
+        matches = re.findall(r"\[(.*?)\]", self.message)
         if matches:
             return matches[0]
         else:
@@ -37,6 +45,12 @@ class UploadReport:
         self.processed_content = processed_content
         self.invalid_content = invalid_content
         self.validation_errors = validation_errors
+
+    def to_dict(self):
+        return {
+            "invalid_content": list(self.invalid_content),
+            "validation_errors": [error.to_dict() for error in self.validation_errors]
+        }
 
     @classmethod
     def build_report(
