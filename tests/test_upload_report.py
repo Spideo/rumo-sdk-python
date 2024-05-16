@@ -75,6 +75,22 @@ def test_build_report_when_subcontents_error():
     assert report.validation_errors == expected_report.validation_errors
 
 
+def test_validation_error_eq():
+    err1 = ValidationError(
+        "ERROR_0204",
+        "Content not Found: contentId does not exist.",
+        "2",
+        "RequestBodyValidation",
+    )
+    err2 = ValidationError(
+        "ERROR_0204",
+        "Content not Found: contentId does not exist.",
+        "2",
+        "RequestBodyValidation",
+    )
+    assert err1.__eq__(err2).__eq__(True)
+
+
 sub_content_responses = [
     {
         "message": (
