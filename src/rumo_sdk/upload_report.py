@@ -19,12 +19,7 @@ class ValidationError:
 
     def __eq__(self, other):
         if isinstance(other, ValidationError):
-            return (
-                self.errorCode == other.errorCode
-                and self.message == other.message
-                and self.value == other.value
-                and self.errorType == other.errorType
-            )
+            return self.to_dict() == other.to_dict()
         return False
 
     def parse_id_from_error_message(self) -> Optional[str]:
