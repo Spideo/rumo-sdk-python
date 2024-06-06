@@ -5,7 +5,7 @@ class EditorialListApi:
     def __init__(self, rumo_client: api_client.RumoClient):
         self._rumo_client = rumo_client
 
-    def get_list(self) -> dict:
+    def get_lists(self) -> dict:
         """https://apidoc.rumo.co/#get-/list"""
         endpoint = "/list"
         return self._rumo_client.get(endpoint)

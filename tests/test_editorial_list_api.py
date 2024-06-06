@@ -1,9 +1,9 @@
 from rumo_sdk.editorial_list_api import EditorialListApi
 
 
-def test_get_list(api_mock):
+def test_get_lists(api_mock):
     list_api = EditorialListApi(api_mock)
-    list_api.get_list()
+    list_api.get_lists()
     api_mock.call_api.assert_called_once_with("GET", "/list")
 
 
