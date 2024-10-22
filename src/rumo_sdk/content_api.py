@@ -58,8 +58,8 @@ class ContentApi:
         print("\nFinished deleting contents.")
 
     def _delete_all(self) -> dict:
-        """https://apidoc.rumo.co/#delete-/content"""
-        endpoint = "/content"
+        """https://apidoc.rumo.co/#delete-/all-content"""
+        endpoint = "/all-content"
         return self._rumo_client.delete(endpoint)
 
     def get_item_count(self) -> int:
