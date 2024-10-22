@@ -84,7 +84,7 @@ def test_delete_items_by_id_by_batch(api_mock):
 def test_delete_all(api_mock):
     content_api = ContentApi(api_mock)
     content_api._delete_all()
-    api_mock.call_api.assert_called_once_with("DELETE", "/content")
+    api_mock.call_api.assert_called_once_with("DELETE", "/all-content")
 
 
 def test_get_item_count(api_mock):
