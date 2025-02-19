@@ -5,7 +5,7 @@ from openapi_core.validation.request.exceptions import InvalidRequestBody
 
 from rumo_sdk import api_client
 from rumo_sdk.upload_report import UploadReport
-from rumo_sdk.utils import FilterOperatorType, RumoFilters, batched
+from rumo_sdk.utils import FilterOperatorType, ItemType, RumoFilters, batched
 
 
 class ContentApi:
@@ -18,6 +18,7 @@ class ContentApi:
         limit: Optional[int] = 10,
         filters: Optional[RumoFilters.FilterType] = None,
         filter_operator: Optional[FilterOperatorType] = FilterOperatorType.OR,
+        item_type: Optional[ItemType] = None,
     ) -> dict:
         """https://apidoc.rumo.co/#get-/content"""
         endpoint = "/content"
@@ -25,6 +26,8 @@ class ContentApi:
         if filters is not None:
             rumo_filters = RumoFilters(filters, filter_operator)
             params.update(rumo_filters.format_filters_to_query_params())
+        if item_type is not None:
+            params.update({"itemType": item_type.value})
         return self._rumo_client.get(endpoint, query_params=params)
 
     def get_items_id(self, **kwargs) -> dict:
