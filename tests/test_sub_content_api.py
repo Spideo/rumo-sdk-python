@@ -26,6 +26,15 @@ def test_get_sub_contents(api_mock):
     api_mock.call_api.assert_called_once_with("GET", "/content/id/sub-contents")
 
 
+def test_get_all_sub_contents(api_mock):
+    sub_content_api = SubContentApi(api_mock)
+    sub_content_api.get_all_sub_contents(skip=2)
+    expected_params = {"skip": 2, "limit": 10}
+    api_mock.call_api.assert_called_once_with(
+        "GET", "/content/sub-contents", query_params=expected_params
+    )
+
+
 def test_delete_sub_contents(api_mock):
     sub_content_api = SubContentApi(api_mock)
     sub_content_api.delete_sub_contents("id")
