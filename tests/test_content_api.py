@@ -1,6 +1,9 @@
 from unittest.mock import call
 
+import pytest
+
 from rumo_sdk.content_api import ContentApi
+from rumo_sdk.utils import ItemType
 
 
 def test_get_items(api_mock):
@@ -32,6 +35,24 @@ def test_get_items_filters(api_mock):
             "filters": ["f_a:v_a,v_b", "f_b:v_c"],
             "filterOperator": "OR",
         },
+    )
+
+
+@pytest.mark.parametrize(
+    "key, value",
+    [
+        (ItemType.CHILD, "child"),
+        (ItemType.PARENT, "parent"),
+        (ItemType.SINGLE, "single"),
+    ],
+)
+def test_get_items_type(key, value, api_mock):
+    reco_api = ContentApi(api_mock)
+    reco_api.get_items(item_type=key)
+    api_mock.call_api.assert_called_once_with(
+        "GET",
+        "/content",
+        query_params={"skip": 0, "limit": 10, "itemType": value},
     )
 
 

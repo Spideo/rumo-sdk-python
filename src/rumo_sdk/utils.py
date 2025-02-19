@@ -18,6 +18,12 @@ class FilterOperatorType(Enum):
     OR = "OR"
 
 
+class ItemType(Enum):
+    SINGLE = "single"
+    PARENT = "parent"
+    CHILD = "child"
+
+
 class RumoFilters:
     FilterType = dict[str, list[str]]
 
