@@ -11,10 +11,23 @@ class SubContents(TypedDict):
 
 
 class SubContentApi(ContentApi):
-    def get_sub_contents(self, content_id: str) -> dict:
+    def get_sub_contents(
+        self,
+        content_id: str,
+    ) -> dict:
         """https://apidoc.rumo.co/#get-/content/-contentId-/sub-contents"""
         endpoint = f"/content/{content_id}/sub-contents"
         return self._rumo_client.get(endpoint)
+
+    def get_all_sub_contents(
+        self,
+        skip: Optional[int] = 0,
+        limit: Optional[int] = 10,
+    ) -> dict:
+        """https://api-doc.rumo.co/#get-/content/sub-contents"""
+        endpoint = "/content/sub-contents"
+        params = {"skip": skip, "limit": limit}
+        return self._rumo_client.get(endpoint, query_params=params)
 
     def _add_sub_contents(self, list_of_relations: list[SubContents], **kwargs) -> dict:
         """https://apidoc.rumo.co/#post-/content/sub-contents"""
