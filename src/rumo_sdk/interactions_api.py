@@ -102,32 +102,14 @@ class InteractionsApi:
         }
         return self._rumo_client.get(endpoint, query_params=params)
 
-    def click(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.CLICK, content_id)
-
-    def purchase(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.PURCHASE, content_id)
-
-    def bookmark(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.BOOKMARK, content_id)
-
-    def like(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.LIKE, content_id)
-
-    def dislike(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.DISLIKE, content_id)
-
-    def more_info(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.MOREINFO, content_id)
-
-    def start(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.START, content_id)
-
-    def complete(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.COMPLETE, content_id)
-
-    def add_to_list(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.ADDTOLIST, content_id)
-
-    def share(self, user_id: str, content_id: str) -> dict:
-        return self._post_interaction(user_id, InteractionType.SHARE, content_id)
+    for interaction_type in InteractionType:
+        exec(
+            """def {name}(self, user_id: str, content_id: str) -> dict:
+                    return self._post_interaction(
+                        user_id,
+                        {interaction_type},
+                        content_id)
+            """.format(
+                name=interaction_type.value, interaction_type=interaction_type
+            )
+        )
